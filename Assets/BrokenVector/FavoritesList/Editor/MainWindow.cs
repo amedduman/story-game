@@ -176,7 +176,6 @@ namespace BrokenVector.FavoritesList
             {
                 if (EditorApplication.timeSinceStartup - clickTime < doubleClickTime)
                 {
-                    Debug.Log("DoubleClick");
                     reference.UpdateCachedData();
                     reference.Select(true);
 
