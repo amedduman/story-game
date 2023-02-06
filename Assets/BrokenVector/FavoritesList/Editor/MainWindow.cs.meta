@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: 10b25ca066b4e714280829ee6c485b61
+guid: 30513c1101c5c29459ab029986bd401a
+labels:
+- favorites
+- favoriteslist
+- list
+- script
+timeCreated: 1458954634
+licenseType: Store
 MonoImporter:
-  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
