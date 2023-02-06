@@ -8,7 +8,7 @@ public class GridGenerator : MonoBehaviour
 	[SerializeField] Tile tilePrefab;
 	[SerializeField] float _tilesPosOnZAxis;
 	[SerializeField] int xSize = 8;
-	[SerializeField] int ySize = 8;
+	[SerializeField] int zSize = 8;
 	
 	Tile[,] tiles;
 #if UNITY_EDITOR
@@ -16,38 +16,20 @@ public class GridGenerator : MonoBehaviour
 	[ContextMenu("Generate Grid")]
 	void GenerateGrid () 
 	{
-		tiles = new Tile[xSize, ySize];
+		DestroyGrid();
+		tiles = new Tile[xSize, zSize];
 
-		gameCam = FindObjectOfType<Camera>();
-		
 		// calculate needed distance between tiles
-		Vector2 offset = tilePrefab.GetComponentInChildren<SpriteRenderer>().bounds.size;
+		Vector3 offset = tilePrefab.GetComponentInChildren<Renderer>().bounds.size;
 		
-		// calculate grid size
-		float gridWidth = offset.x * xSize;
-		float gridHeight = offset.y * ySize;
-		
-        // set grid's parent object's position
-        Vector3 pos = gameCam.transform.position;
-
-        pos.y -= Mathf.Abs(gridHeight / 2);
-        pos.y += offset.y / 2;
-
-        pos.x -= Mathf.Abs(gridWidth / 2);
-        pos.x += offset.x / 2;
-
-        pos.z = _tilesPosOnZAxis;
-        
-        transform.position = pos;
-
 		// generate grid
 		for (int i = 0; i < xSize; i++) 
 		{
-			for (int j = 0; j < ySize; j++) 
+			for (int j = 0; j < zSize; j++) 
 			{
 				Tile tile = PrefabUtility.InstantiatePrefab(tilePrefab, transform) as Tile ;
 
-                tile.transform.localPosition = new Vector3(offset.x * i, offset.y * j, 0);
+                tile.transform.localPosition = new Vector3(offset.x * i, 0, offset.z * j);
 
 				NameTile(tile, i, j);
 
@@ -64,14 +46,14 @@ public class GridGenerator : MonoBehaviour
 		for (int i = 0; i < transform.childCount; i++)
 		{
 			Tile tile = transform.GetChild(i).GetComponent<Tile>();
-			tile.SetNeighborsNewMethod();
+			tile.SetNeighbors();
 		}
 	}
 
-	void SetTileIds(Tile tile, int x, int y)
+	void SetTileIds(Tile tile, int x, int z)
 	{
 		tile.tileIdX = x;
-		tile.tileIdY = y;
+		tile.tileIdZ = z;
 	}
 
 	void NameTile(Tile tile, int x, int y)
@@ -85,6 +67,6 @@ public class GridGenerator : MonoBehaviour
 		for (int i = transform.childCount - 1; i >= 0; i--)
 		{
 			DestroyImmediate(transform.GetChild(i).gameObject);
-		}	
+		}	 
 	}
 }
