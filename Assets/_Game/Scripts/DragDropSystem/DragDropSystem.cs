@@ -8,9 +8,28 @@ public class DragDropSystem : MonoBehaviour
     [SerializeField] Draggable _draggable;
     void FixedUpdate()
     {
-        Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, 0, Input.mousePosition.y);
-        Vector3 mouseWorldPos = ServiceLocator.Get<Camera>(SerLocID.mainCam).ScreenToWorldPoint(mouseScreenPos);
-        _draggable.transform.position = mouseWorldPos;
-        Debug.Log(mouseWorldPos);
+        Camera cam = ServiceLocator.Get<Camera>(SerLocID.mainCam);
+        Ray ray;
+        
+        if (cam.orthographic)
+        {
+            Vector3 mouseScreenPos = Input.mousePosition;
+            mouseScreenPos.z = cam.nearClipPlane;
+            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(mouseScreenPos);
+            ray = new Ray(mouseWorldPos, cam.transform.forward);
+        }
+        else
+        {
+            Vector3 mouseScreenPos = Input.mousePosition;
+            mouseScreenPos.z = cam.nearClipPlane;
+            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(mouseScreenPos);
+            ray = new Ray(cam.transform.position, mouseWorldPos - cam.transform.position);
+        }
+        
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        {
+            _draggable.transform.position = hitInfo.point;
+        }
     }
 }
