@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DragDropSystem : MonoBehaviour
 {
+    [SerializeField] LayerMask _layerMask;
     Camera _camera;
     Draggable _currentDraggable;
 
@@ -45,11 +46,16 @@ public class DragDropSystem : MonoBehaviour
     {
         Ray ray = GetRay(_camera);
         
-        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _layerMask))
         {
             if(_currentDraggable != null)
             {
                 _currentDraggable.Drag(hitInfo);
+                
+                if (hitInfo.transform.GetComponentInParent<Tile>() == null)
+                {
+                    _currentDraggable.transform.position = hitInfo.point;
+                }
             }
         }
     }
