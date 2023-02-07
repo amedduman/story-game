@@ -26,10 +26,6 @@ public class DragDropSystem : MonoBehaviour
                 {
                     _currentDraggable = draggable;
                     draggable.StartDrag();
-                    if (_currentDraggable != draggable)
-                    {
-                        
-                    }
                 }
             }
         }
@@ -51,15 +47,6 @@ public class DragDropSystem : MonoBehaviour
         
         if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
-            // Draggable draggable = hitInfo.transform.GetComponentInParent<Draggable>();
-            // if (draggable != null)
-            // {
-            //     if (_currentDraggable != draggable)
-            //     {
-            //         _currentDraggable = draggable;
-            //         draggable.StartDrag();
-            //     }
-            // }
             if(_currentDraggable != null)
             {
                 _currentDraggable.Drag(hitInfo);
