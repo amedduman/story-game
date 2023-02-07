@@ -22,7 +22,7 @@ public class Draggable : MonoBehaviour
     public void Drag(RaycastHit hitInfo)
     {
         // transform.position = hitInfo.transform.position;
-        transform.DOMove(hitInfo.transform.position, .8f);
+        transform.DOMove(hitInfo.transform.position, .1f);
     }
 
     public void StopDrag()
