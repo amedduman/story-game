@@ -5,10 +5,70 @@ using UnityEngine;
 
 public class DragDropSystem : MonoBehaviour
 {
-    [SerializeField] Draggable _draggable;
+    Camera _camera;
+    Draggable _currentDraggable;
+
+    void Start()
+    {
+        _camera = ServiceLocator.Get<Camera>(SerLocID.mainCam);
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = GetRay(_camera);
+        
+            if (Physics.Raycast(ray, out RaycastHit hitInfo))
+            {
+                Draggable draggable = hitInfo.transform.GetComponentInParent<Draggable>();
+                if (draggable != null)
+                {
+                    _currentDraggable = draggable;
+                    draggable.StartDrag();
+                    if (_currentDraggable != draggable)
+                    {
+                        
+                    }
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (_currentDraggable != null)
+            {
+                _currentDraggable.StopDrag();
+            }
+
+            _currentDraggable = null;
+        }
+    }
+
     void FixedUpdate()
     {
-        Camera cam = ServiceLocator.Get<Camera>(SerLocID.mainCam);
+        Ray ray = GetRay(_camera);
+        
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        {
+            // Draggable draggable = hitInfo.transform.GetComponentInParent<Draggable>();
+            // if (draggable != null)
+            // {
+            //     if (_currentDraggable != draggable)
+            //     {
+            //         _currentDraggable = draggable;
+            //         draggable.StartDrag();
+            //     }
+            // }
+            if(_currentDraggable != null)
+            {
+                _currentDraggable.Drag(hitInfo);
+            }
+        }
+    }
+
+    Ray GetRay(Camera cam)
+    {
         Ray ray;
         
         if (cam.orthographic)
@@ -27,9 +87,7 @@ public class DragDropSystem : MonoBehaviour
         }
         
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo))
-        {
-            _draggable.transform.position = hitInfo.point;
-        }
+
+        return ray;
     }
 }

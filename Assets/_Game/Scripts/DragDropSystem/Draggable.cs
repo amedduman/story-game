@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Collider _col;
+
+    public void StartDrag()
     {
-        
+        _col.enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Drag(RaycastHit hitInfo)
     {
-        
+        transform.position = hitInfo.transform.position;
+    }
+
+    public void StopDrag()
+    {
+        _col.enabled = true;
     }
 }

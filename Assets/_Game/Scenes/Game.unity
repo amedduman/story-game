@@ -710,7 +710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &119609866
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1294,7 +1294,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11.18
+  orthographic size: 7.79
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2766,7 +2766,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 878e7d65175a445f19bffa5a62141a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _draggable: {fileID: 1203670069}
 --- !u!4 &1006667964
 Transform:
   m_ObjectHideFlags: 0
@@ -3244,6 +3243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146651225f967436685ed1c3c11faf15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _col: {fileID: 3469287838377766145}
 --- !u!1001 &1217442029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5666,6 +5666,7 @@ GameObject:
   - component: {fileID: 3469287838377766144}
   - component: {fileID: 1711813854314764746}
   - component: {fileID: 1203670069}
+  - component: {fileID: 3469287838377766145}
   m_Layer: 0
   m_Name: windmill
   m_TagString: Untagged
@@ -5748,6 +5749,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148326840351}
   m_Mesh: {fileID: 535561084831100290, guid: 993f684c7c62547998fc3d4bf9a82559, type: 3}
+--- !u!65 &3469287838377766145
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148326840351}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9998999, y: 1.165942, z: 0.9998999}
+  m_Center: {x: 0, y: 0.582971, z: 0}
 --- !u!1 &4074457443659944301
 GameObject:
   m_ObjectHideFlags: 0
