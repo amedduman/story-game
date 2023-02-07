@@ -52,10 +52,11 @@ public class DragDropSystem : MonoBehaviour
             {
                 _currentDraggable.Drag(hitInfo);
                 
-                if (hitInfo.transform.GetComponentInParent<Tile>() == null)
-                {
-                    _currentDraggable.transform.position = hitInfo.point;
-                }
+                // if (hitInfo.transform.GetComponentInParent<Tile>() == null)
+                // {
+                //     // _currentDraggable.transform.position = hitInfo.point;
+                //     _currentDraggable.ReturnRestingPos();
+                // }
             }
         }
     }
