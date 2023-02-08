@@ -18,7 +18,7 @@ public class DragDropSystem : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = GetRay(_camera);
+            Ray ray = MyUtils.GetRayFromCamToMouse(_camera);
         
             if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
@@ -35,7 +35,7 @@ public class DragDropSystem : MonoBehaviour
         {
             if (_currentDraggable != null)
             {
-                _currentDraggable.StopDrag();
+                _currentDraggable.Drop();
             }
 
             _currentDraggable = null;
@@ -44,44 +44,16 @@ public class DragDropSystem : MonoBehaviour
 
     void FixedUpdate()
     {
-        Ray ray = GetRay(_camera);
+        Ray ray = MyUtils.GetRayFromCamToMouse(_camera);
         
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _layerMask))
         {
             if(_currentDraggable != null)
             {
                 _currentDraggable.Drag(hitInfo);
-                
-                // if (hitInfo.transform.GetComponentInParent<Tile>() == null)
-                // {
-                //     // _currentDraggable.transform.position = hitInfo.point;
-                //     _currentDraggable.ReturnRestingPos();
-                // }
             }
         }
     }
 
-    Ray GetRay(Camera cam)
-    {
-        Ray ray;
-        
-        if (cam.orthographic)
-        {
-            Vector3 mouseScreenPos = Input.mousePosition;
-            mouseScreenPos.z = cam.nearClipPlane;
-            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(mouseScreenPos);
-            ray = new Ray(mouseWorldPos, cam.transform.forward);
-        }
-        else
-        {
-            Vector3 mouseScreenPos = Input.mousePosition;
-            mouseScreenPos.z = cam.nearClipPlane;
-            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(mouseScreenPos);
-            ray = new Ray(cam.transform.position, mouseWorldPos - cam.transform.position);
-        }
-        
-        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
-
-        return ray;
-    }
+    
 }

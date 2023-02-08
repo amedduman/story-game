@@ -6,13 +6,9 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour
 {
+    public event Action OnDrop;
     [SerializeField] Collider _col;
-    Vector3 _startingPos;
 
-    void Awake()
-    {
-        _startingPos = transform.position;
-    }
 
     public void StartDrag()
     {
@@ -21,18 +17,19 @@ public class Draggable : MonoBehaviour
 
     public void Drag(RaycastHit hitInfo)
     {
-        // transform.position = hitInfo.transform.position;
-        transform.DOMove(hitInfo.transform.position, .1f);
+        if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Tile"))
+        {
+            transform.DOMove(hitInfo.transform.position, .1f);
+        }
+        else if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            transform.DOMove(hitInfo.point, .1f);
+        }
     }
 
-    public void StopDrag()
+    public void Drop()
     {
         _col.enabled = true;
-        ReturnRestingPos();
-    }
-
-    public void ReturnRestingPos()
-    {
-        transform.DOMove(_startingPos, .5f);
+        OnDrop?.Invoke();
     }
 }
