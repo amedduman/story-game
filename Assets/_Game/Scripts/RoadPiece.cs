@@ -27,16 +27,16 @@ public class RoadPiece : MonoBehaviour
 
     void HandleDrop()
     {
-        List<Tile> _tiles = new List<Tile>();
-        for (int i = 0; i < _raycastPoints.Length; i++)
+        List<Tile> tiles = new List<Tile>();
+        foreach (var raycastPoint in _raycastPoints)
         {
-            RaycastHit? hitInfo = _raycastPoints[i].Raycast();
+            RaycastHit? hitInfo = raycastPoint.Raycast();
             if (hitInfo == null) continue;
             RaycastHit valueHitInfo = (RaycastHit)hitInfo;
             Tile tile = valueHitInfo.transform.GetComponentInParent<Tile>();
             if (tile != null)
             {
-                _tiles.Add(tile);
+                tiles.Add(tile);
             }
             else
             {
@@ -44,10 +44,13 @@ public class RoadPiece : MonoBehaviour
                 break;
             }
         }
+
+        _draggable.EnableDraggable();
+
     }
     
     void ReturnRestingPos()
     {
-        transform.DOMove(_startingPos, .5f);
+        transform.DOMove(_startingPos, .5f).OnComplete(() => _draggable.EnableDraggable());
     }
 }

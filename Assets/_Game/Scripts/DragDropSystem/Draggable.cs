@@ -29,7 +29,11 @@ public class Draggable : MonoBehaviour
 
     public void Drop()
     {
-        _col.enabled = true;
         OnDrop?.Invoke();
+    }
+
+    public void EnableDraggable()
+    {
+        _col.enabled = true;
     }
 }
