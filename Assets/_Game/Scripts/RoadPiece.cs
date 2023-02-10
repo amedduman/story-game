@@ -41,7 +41,8 @@ public class RoadPiece : MonoBehaviour
             else
             {
                 ReturnRestingPos();
-                break;
+                // break;
+                return;
             }
         }
 
