@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(Draggable))]
 public class RoadPiece : MonoBehaviour
 {
-    [SerializeField] Draggable _draggable;
-    [SerializeField] Raycaster[] _raycastPoints;
+    [SerializeField] Transform _raycastPointsParent;
+    // [SerializeField] Raycaster[] _raycastPoints;
     
+    Draggable _draggable;
     Vector3 _startingPos;
 
     void Awake()
     {
+        _draggable = GetComponent<Draggable>();
         _startingPos = transform.position;
     }
     
@@ -28,10 +31,16 @@ public class RoadPiece : MonoBehaviour
     void HandleDrop()
     {
         List<Tile> tiles = new List<Tile>();
-        foreach (var raycastPoint in _raycastPoints)
+        for (int i = 0; i < _raycastPointsParent.childCount; i++)
         {
+            Raycaster raycastPoint = _raycastPointsParent.GetChild(i).GetComponent<Raycaster>();
+            
             RaycastHit? hitInfo = raycastPoint.Raycast();
-            if (hitInfo == null) continue;
+            if (hitInfo == null)
+            {
+                ReturnRestingPos();
+                return;
+            }
             RaycastHit valueHitInfo = (RaycastHit)hitInfo;
             Tile tile = valueHitInfo.transform.GetComponentInParent<Tile>();
             if (tile != null)
@@ -45,6 +54,27 @@ public class RoadPiece : MonoBehaviour
                 return;
             }
         }
+        // foreach (var raycastPoint in _raycastPoints)
+        // {
+        //     RaycastHit? hitInfo = raycastPoint.Raycast();
+        //     if (hitInfo == null)
+        //     {
+        //         ReturnRestingPos();
+        //         return;
+        //     }
+        //     RaycastHit valueHitInfo = (RaycastHit)hitInfo;
+        //     Tile tile = valueHitInfo.transform.GetComponentInParent<Tile>();
+        //     if (tile != null)
+        //     {
+        //         tiles.Add(tile);
+        //     }
+        //     else
+        //     {
+        //         ReturnRestingPos();
+        //         // break;
+        //         return;
+        //     }
+        // }
 
         _draggable.EnableDraggable();
 
