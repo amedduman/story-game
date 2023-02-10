@@ -10,7 +10,7 @@ public class RoadCompletionChecker : MonoBehaviour
     [SerializeField] Tile _endTile;
 
     List<RoadPiece> _roads = new List<RoadPiece>();
-    List<Tile> _allTiles = new List<Tile>();
+    List<Tile> _roadTiles = new List<Tile>();
 
     void Start()
     {
@@ -25,20 +25,14 @@ public class RoadCompletionChecker : MonoBehaviour
 
     public void CheckRoad(List<Tile> tiles)
     {
-        _allTiles.Clear();
+        _roadTiles.Clear();
         
         foreach (var road in _roads)
         {
-            _allTiles.AddRange(road.Tiles);
+            _roadTiles.AddRange(road.Tiles);
         }
         
-        foreach (var allTile in _allTiles)
-        {
-            allTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.gray;
-        }
-
-        // StartCoroutine(Check());
-        // Check(_startTile);
+        StartCoroutine(Check());
     }
 
     IEnumerator Check()
@@ -56,12 +50,13 @@ public class RoadCompletionChecker : MonoBehaviour
         
             bool roadAvailable = false;
         
-            foreach (var tile in _allTiles)
+            foreach (var tile in _roadTiles)
             {
                 if (currentNeighbours.Contains(tile))
                 {
                     roadAvailable = true;
                     currenTile = tile;
+                    _roadTiles.Remove(currenTile);
                     currenTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.green;
                     break;
                 } 
@@ -70,65 +65,14 @@ public class RoadCompletionChecker : MonoBehaviour
             if (roadAvailable)
             {
                 Debug.Log("searching road");
+                Debug.Break();
             }
             else
             {
                 Debug.Log("not complete");
+                break;
             }
-            Debug.Break();
             yield return null;
         }
     }
-
-    // int i;
-    // void Check(Tile ttile)
-    // {
-    //     i++;
-    //     if (i > 999)
-    //     {
-    //         Debug.Log("reached limit");
-    //         return;
-    //     }
-    //     Tile currenTile = ttile;
-    //
-    //     if (currenTile == _endTile)
-    //     {
-    //         Debug.Log("complete");
-    //         return;
-    //     }
-    //     List<Tile> currentNeighbours = currenTile.GetNeighbours();
-    //
-    //     foreach (var currentNeighbour in currentNeighbours)
-    //     {
-    //         currentNeighbour.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.red;
-    //     }
-    //     
-    //     foreach (var currentNeighbour in currentNeighbours)
-    //     {
-    //         currentNeighbour.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.green;
-    //     }
-    //     
-    //     bool roadAvailable = false;
-    //     Tile newTile = null;
-    //     
-    //     foreach (var tile in _allTiles)
-    //     {
-    //         if (currentNeighbours.Contains(tile))
-    //         {
-    //             roadAvailable = true;
-    //             newTile = tile;
-    //             break;
-    //         } 
-    //     }
-    //
-    //     if (roadAvailable)
-    //     {
-    //         Debug.Log("searching road");
-    //         Check(newTile);
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("not complete");
-    //     }
-    // }
 }
