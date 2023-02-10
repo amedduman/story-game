@@ -1523,7 +1523,7 @@ PrefabInstance:
     - target: {fileID: 3028882639353622367, guid: e313471c8540c4a239808548bb04a5e1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3028882639353622367, guid: e313471c8540c4a239808548bb04a5e1,
         type: 3}
@@ -1796,18 +1796,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1400990062}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1449281596 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5670533719816136701, guid: 0b8a675167822438e99d7e21bc4926e5,
-    type: 3}
-  m_PrefabInstance: {fileID: 814140795}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea6db9b701d14074ae919ab6aaa068a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1479183449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1979,7 +1967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startTile: {fileID: 799579215}
-  _endTile: {fileID: 1449281596}
+  _endTile: {fileID: 1637531787}
 --- !u!4 &1519693973
 Transform:
   m_ObjectHideFlags: 0
@@ -2010,6 +1998,18 @@ MonoBehaviour:
   _isSingleton: 1
   _cmp: {fileID: 1519693972}
   _id: 0
+--- !u!114 &1637531787 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5670533719816136701, guid: 0b8a675167822438e99d7e21bc4926e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 678173878}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6db9b701d14074ae919ab6aaa068a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1654057976
 GameObject:
   m_ObjectHideFlags: 0
