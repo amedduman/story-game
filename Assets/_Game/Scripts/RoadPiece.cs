@@ -6,8 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Draggable))]
 public class RoadPiece : MonoBehaviour
 {
+    public List<Tile> Tiles {get; private set;} = new List<Tile>();
+    
     [SerializeField] Transform _raycastPointsParent;
-    // [SerializeField] Raycaster[] _raycastPoints;
     
     Draggable _draggable;
     Vector3 _startingPos;
@@ -17,7 +18,12 @@ public class RoadPiece : MonoBehaviour
         _draggable = GetComponent<Draggable>();
         _startingPos = transform.position;
     }
-    
+
+    void Start()
+    {
+        ServiceLocator.Get<RoadCompletionChecker>().AddRoad(this);
+    }
+
     void OnEnable()
     {
         _draggable.OnDrop += HandleDrop;
@@ -30,7 +36,6 @@ public class RoadPiece : MonoBehaviour
 
     void HandleDrop()
     {
-        List<Tile> tiles = new List<Tile>();
         for (int i = 0; i < _raycastPointsParent.childCount; i++)
         {
             Raycaster raycastPoint = _raycastPointsParent.GetChild(i).GetComponent<Raycaster>();
@@ -45,43 +50,23 @@ public class RoadPiece : MonoBehaviour
             Tile tile = valueHitInfo.transform.GetComponentInParent<Tile>();
             if (tile != null)
             {
-                tiles.Add(tile);
+                Tiles.Add(tile);
             }
             else
             {
                 ReturnRestingPos();
-                // break;
                 return;
             }
         }
-        // foreach (var raycastPoint in _raycastPoints)
-        // {
-        //     RaycastHit? hitInfo = raycastPoint.Raycast();
-        //     if (hitInfo == null)
-        //     {
-        //         ReturnRestingPos();
-        //         return;
-        //     }
-        //     RaycastHit valueHitInfo = (RaycastHit)hitInfo;
-        //     Tile tile = valueHitInfo.transform.GetComponentInParent<Tile>();
-        //     if (tile != null)
-        //     {
-        //         tiles.Add(tile);
-        //     }
-        //     else
-        //     {
-        //         ReturnRestingPos();
-        //         // break;
-        //         return;
-        //     }
-        // }
 
+        ServiceLocator.Get<RoadCompletionChecker>().CheckRoad(Tiles);
         _draggable.EnableDraggable();
 
     }
     
     void ReturnRestingPos()
     {
+        Tiles.Clear();
         transform.DOMove(_startingPos, .5f).OnComplete(() => _draggable.EnableDraggable());
     }
 }

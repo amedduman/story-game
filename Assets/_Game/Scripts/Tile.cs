@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.Collections;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class Tile : MonoBehaviour
     public Tile _nTileRight;
     
     [SerializeField] LayerMask _tileLayer;
-    
+
     public void SetNeighbors()
     {
         Vector3 origin = transform.position;
@@ -62,5 +63,15 @@ public class Tile : MonoBehaviour
         Debug.DrawRay(rayLeft.origin, rayLeft.direction * size.x);
         Debug.DrawRay(rayRight.origin, rayRight.direction * size.x);
         Gizmos.DrawSphere(origin, .1f);
+    }
+
+    public List<Tile> GetNeighbours()
+    {
+        List<Tile> tiles = new List<Tile>();
+        if (_nTileForward != null)  tiles.Add(_nTileForward);
+        if (_nTileBackward != null)  tiles.Add(_nTileBackward);
+        if (_nTileLeft != null)  tiles.Add(_nTileLeft);
+        if (_nTileRight != null)  tiles.Add(_nTileRight);
+        return tiles;
     }
 }

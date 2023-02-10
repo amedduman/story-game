@@ -8,12 +8,10 @@ public class Draggable : MonoBehaviour
 {
     [SerializeField] GameObject _colParent;
     public event Action OnDrop;
-    
 
     public void StartDrag()
     {
         _colParent.SetActive(false);
-        // _enabled = false;
     }
 
     public void Drag(RaycastHit hitInfo)
@@ -36,6 +34,5 @@ public class Draggable : MonoBehaviour
     public void EnableDraggable()
     {
         _colParent.SetActive(true);
-        // _enabled = true;
     }
 }
