@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class RoadCompletionChecker : MonoBehaviour
 {
+    public event Action OnRoadComplete;
+    
     [SerializeField] Tile _startTile;
-    [SerializeField] Tile _endTile;
+    public Tile _endTile;
 
     List<RoadPiece> _roads = new List<RoadPiece>();
     List<RoadPiece> _sortedRoads = new List<RoadPiece>();
@@ -24,6 +26,11 @@ public class RoadCompletionChecker : MonoBehaviour
     public void AddRoad(RoadPiece rp)
     {
         _roads.Add(rp);        
+    }
+
+    public List<RoadPiece> GetSortedRoads()
+    {
+        return _sortedRoads;
     }
 
     public void CheckRoad()
@@ -102,6 +109,7 @@ public class RoadCompletionChecker : MonoBehaviour
                 if (rcp.IsEndPoint())
                 {
                     Debug.Log("complete");
+                    OnRoadComplete?.Invoke();
                     yield break;
                 }
                 else
