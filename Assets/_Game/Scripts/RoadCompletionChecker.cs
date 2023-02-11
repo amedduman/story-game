@@ -33,7 +33,7 @@ public class RoadCompletionChecker : MonoBehaviour
         }
         _roadTiles.Add(_endTile);
         
-        StartCoroutine(Check());
+        // StartCoroutine(Check());
     }
 
     IEnumerator Check()
