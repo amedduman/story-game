@@ -95,7 +95,6 @@ public class RoadCompletionChecker : MonoBehaviour
             if (rcp.GetConnectionPoint() != null)
             {
                 rcp = rcp.GetConnectionPoint();
-                Debug.Log("able to get connected point ");
                 AddRoad(rcp);
             }
             else
