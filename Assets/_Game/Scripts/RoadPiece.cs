@@ -10,7 +10,7 @@ public class RoadPiece : MonoBehaviour
     public List<Tile> Tiles {get; private set;} = new List<Tile>();
     
     [SerializeField] Transform _raycastPointsParent;
-    [SerializeField] RoadConnectionPoint[] _roadConnectionPoints;
+    public RoadConnectionPoint[] _roadConnectionPoints;
 
     
     Draggable _draggable;

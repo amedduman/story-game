@@ -13,6 +13,7 @@ public class RoadCompletionChecker : MonoBehaviour
     List<RoadPiece> _sortedRoads = new List<RoadPiece>();
     RoadPiece _firstRoad;
     RoadPiece _lastRoad;
+    RoadConnectionPoint _firstRcp;
     
     void Start()
     {
@@ -35,6 +36,13 @@ public class RoadCompletionChecker : MonoBehaviour
         {
             if (road.IsFirstRoad())
             {
+                foreach (var rcp in road._roadConnectionPoints)
+                {
+                    if (rcp.IsStartPoint())
+                    {
+                        _firstRcp = rcp;
+                    }
+                }
                 _sortedRoads.Add(road);
                 _firstRoad = road;
                 break;
@@ -64,7 +72,6 @@ public class RoadCompletionChecker : MonoBehaviour
         }
         
         _sortedRoads.Add(_firstRoad);
-        Debug.Log("start checking");
         StartCoroutine(AddConnectedRoads());
 
         foreach (var sortedRoad in _sortedRoads)
@@ -72,33 +79,86 @@ public class RoadCompletionChecker : MonoBehaviour
             Debug.Log(sortedRoad.gameObject.name, sortedRoad.gameObject);
         }
     }
-
+    
     IEnumerator AddConnectedRoads()
     {
+        RoadConnectionPoint rcp = _firstRcp;
+        AddRoad(rcp);
+
         while (true)
         {
             Debug.Log("searching");
-            List<RoadPiece> roads = _sortedRoads[^1].GetConnectedRoads();
-            foreach (var road in roads)
+            rcp = rcp.GetPeerPoint();
+            if (rcp == null)
             {
-                if (road != null)
+                Debug.Log("null rcp");
+            }
+            Debug.Log(rcp.gameObject.name, rcp.gameObject);
+            if (rcp.GetConnectionPoint() != null)
+            {
+                rcp = rcp.GetConnectionPoint();
+                Debug.Log("able to get connected point ");
+                AddRoad(rcp);
+            }
+            else
+            {
+                if (rcp.IsEndPoint())
                 {
-                    if (_sortedRoads.Contains(road) == false)
-                    {
-                        _sortedRoads.Add(road);
-                    }
-
-                    if (road.IsLastRoad())
-                    {
-                        Debug.Log("road Complete");
-                        yield break;
-                    }
+                    Debug.Log("complete");
+                    yield break;
+                }
+                else
+                {
+                    Debug.Log("not complete");
+                    yield break;    
                 }
             }
             yield return null;
         }
-        // _sortedRoads.Add(_lastRoad);
     }
+
+    void AddRoad(RoadConnectionPoint rcp)
+    {
+        if (_sortedRoads.Contains(rcp.GetRoad()) == false)
+        {
+            _sortedRoads.Add(rcp.GetRoad());
+        }
+    }
+
+    // IEnumerator AddConnectedRoads()
+    // {
+    //     while (true)
+    //     {
+    //         Debug.Log("searching");
+    //         List<RoadPiece> roads = _sortedRoads[^1].GetConnectedRoads();
+    //         for (var i = 0; i < roads.Count; i++)
+    //         {
+    //             var road = roads[i];
+    //             if (_sortedRoads.Contains(road) == false)
+    //             {
+    //                 _sortedRoads.Add(road);
+    //             }
+    //             else
+    //             {
+    //                 Debug.Log("else");
+    //                 if (i == roads.Count - 1)
+    //                 {
+    //                     Debug.Log("search complete & road not find");
+    //                     yield break;
+    //                 }
+    //             }
+    //
+    //             if (road.IsLastRoad())
+    //             {
+    //                 Debug.Log("road Complete");
+    //                 yield break;
+    //             }
+    //         }
+    //
+    //         yield return null;
+    //     }
+    //     // _sortedRoads.Add(_lastRoad);
+    // }
     
     
 }

@@ -9,6 +9,7 @@ public class RoadConnectionPoint : MonoBehaviour
      [SerializeField] LayerMask _layerMask;
      float _radius = .1f;
 
+     [ContextMenu("GetConnectionPoint")]
      [CanBeNull]
      public RoadConnectionPoint GetConnectionPoint()
      {
@@ -18,9 +19,10 @@ public class RoadConnectionPoint : MonoBehaviour
                var rp = hit.transform.GetComponent<RoadConnectionPoint>();
                if (rp != null)
                {
-                    
                     if (rp.gameObject != gameObject)
                     {
+                         Debug.Log("getting connection point");
+                         Debug.Log(rp.gameObject.name, rp.gameObject);
                          return rp;
                     }
                }
@@ -49,6 +51,7 @@ public class RoadConnectionPoint : MonoBehaviour
           return false;
      }
 
+     [ContextMenu("IsEndPoint")]
      public bool IsEndPoint()
      {
           var hitInfo = SphereCast();
@@ -56,6 +59,7 @@ public class RoadConnectionPoint : MonoBehaviour
           {
                if (hit.transform.CompareTag("Finish"))
                {
+                    Debug.Log("end point detected");
                     return true;
                }
           }
@@ -70,7 +74,7 @@ public class RoadConnectionPoint : MonoBehaviour
           return hitInfo;
      }
 
-     RoadConnectionPoint GetPeerPoint()
+     public RoadConnectionPoint GetPeerPoint()
      {
           return _peerPoint;
      }
