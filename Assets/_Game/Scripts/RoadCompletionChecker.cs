@@ -31,6 +31,7 @@ public class RoadCompletionChecker : MonoBehaviour
         {
             _roadTiles.AddRange(road.Tiles);
         }
+        _roadTiles.Add(_endTile);
         
         StartCoroutine(Check());
     }
@@ -56,6 +57,11 @@ public class RoadCompletionChecker : MonoBehaviour
                 {
                     roadAvailable = true;
                     currenTile = tile;
+                    if (currenTile == _endTile)
+                    {
+                        Debug.Log("complete");
+                        yield break;
+                    }
                     _roadTiles.Remove(currenTile);
                     currenTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.green;
                     break;
@@ -70,7 +76,7 @@ public class RoadCompletionChecker : MonoBehaviour
             else
             {
                 Debug.Log("not complete");
-                break;
+                yield break;
             }
             yield return null;
         }
