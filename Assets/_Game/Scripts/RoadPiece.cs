@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Draggable))]
@@ -9,6 +10,8 @@ public class RoadPiece : MonoBehaviour
     public List<Tile> Tiles {get; private set;} = new List<Tile>();
     
     [SerializeField] Transform _raycastPointsParent;
+    [SerializeField] RoadConnectionPoint[] _roadConnectionPoints;
+
     
     Draggable _draggable;
     Vector3 _startingPos;
@@ -59,7 +62,7 @@ public class RoadPiece : MonoBehaviour
             }
         }
 
-        ServiceLocator.Get<RoadCompletionChecker>().CheckRoad(Tiles);
+        ServiceLocator.Get<RoadCompletionChecker>().CheckRoad();
         _draggable.EnableDraggable();
 
     }
@@ -68,5 +71,36 @@ public class RoadPiece : MonoBehaviour
     {
         Tiles.Clear();
         transform.DOMove(_startingPos, .5f).OnComplete(() => _draggable.EnableDraggable());
+    }
+
+    public bool IsFirstRoad()
+    {
+        foreach (var rcp in _roadConnectionPoints)
+        {
+            if (rcp.IsStartPoint()) return true;
+        }
+
+        return false;
+    }
+
+    public bool IsLastRoad()
+    {
+        foreach (var rcp in _roadConnectionPoints)
+        {
+            if (rcp.IsEndPoint()) return true;
+        }
+
+        return false;
+    }
+
+    public List<RoadPiece> GetConnectedRoads()
+    {
+        List<RoadPiece> roads = new List<RoadPiece>();
+        foreach (var rcp in _roadConnectionPoints)
+        {
+            roads.Add(rcp.GetConnectionPoint().GetRoad());
+        }
+
+        return roads;
     }
 }

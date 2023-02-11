@@ -221,6 +221,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _raycastPointsParent: {fileID: 677091857046730652}
+  _roadConnectionPoints:
+  - {fileID: 7154145384605579070}
+  - {fileID: 951812939678802884}
 --- !u!114 &8453319413972175609
 MonoBehaviour:
   m_ObjectHideFlags: 0

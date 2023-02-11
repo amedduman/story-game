@@ -10,8 +10,10 @@ public class RoadCompletionChecker : MonoBehaviour
     [SerializeField] Tile _endTile;
 
     List<RoadPiece> _roads = new List<RoadPiece>();
-    List<Tile> _roadTiles = new List<Tile>();
-
+    List<RoadPiece> _sortedRoads = new List<RoadPiece>();
+    RoadPiece _firstRoad;
+    RoadPiece _lastRoad;
+    
     void Start()
     {
         _startTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.black;
@@ -23,62 +25,78 @@ public class RoadCompletionChecker : MonoBehaviour
         _roads.Add(rp);        
     }
 
-    public void CheckRoad(List<Tile> tiles)
+    public void CheckRoad()
     {
-        _roadTiles.Clear();
+        _sortedRoads.Clear();
+        _firstRoad = null;
+        _lastRoad = null;
         
         foreach (var road in _roads)
         {
-            _roadTiles.AddRange(road.Tiles);
+            if (road.IsFirstRoad())
+            {
+                _sortedRoads.Add(road);
+                _firstRoad = road;
+                break;
+            }
         }
-        _roadTiles.Add(_endTile);
+
+        if (_firstRoad == null)
+        {
+            Debug.Log("first road is empty");
+
+            return;
+        }
+
+        foreach (var road in _roads)
+        {
+            if (road.IsLastRoad())
+            {
+                _lastRoad = road;
+                break;
+            }
+        }
+
+        if (_lastRoad == null)
+        {
+            Debug.Log("last road is empty");
+            return;
+        }
         
-        // StartCoroutine(Check());
+        _sortedRoads.Add(_firstRoad);
+
+        StartCoroutine(AddConnectedRoads());
+
+        foreach (var sortedRoad in _sortedRoads)
+        {
+            Debug.Log(sortedRoad.gameObject.name, sortedRoad.gameObject);
+        }
     }
 
-    IEnumerator Check()
+    IEnumerator AddConnectedRoads()
     {
-        Tile currenTile = _startTile;
-
-        while (currenTile != _endTile)
+        while (true)
         {
-            List<Tile> currentNeighbours = currenTile.GetNeighbours();
-
-            foreach (var currentNeighbour in currentNeighbours)
+            List<RoadPiece> roads = _sortedRoads[^1].GetConnectedRoads();
+            foreach (var road in roads)
             {
-                currentNeighbour.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.red;
-            }
-        
-            bool roadAvailable = false;
-        
-            foreach (var tile in _roadTiles)
-            {
-                if (currentNeighbours.Contains(tile))
+                if (road != null)
                 {
-                    roadAvailable = true;
-                    currenTile = tile;
-                    if (currenTile == _endTile)
+                    if (_sortedRoads.Contains(road) == false)
                     {
-                        Debug.Log("complete");
+                        _sortedRoads.Add(road);
+                    }
+
+                    if (road.IsLastRoad())
+                    {
                         yield break;
                     }
-                    _roadTiles.Remove(currenTile);
-                    currenTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.green;
-                    break;
-                } 
-            }
-            
-            if (roadAvailable)
-            {
-                Debug.Log("searching road");
-                Debug.Break();
-            }
-            else
-            {
-                Debug.Log("not complete");
-                yield break;
+                }
             }
             yield return null;
         }
+        // _sortedRoads.Add(_lastRoad);
     }
+    
+    
 }
