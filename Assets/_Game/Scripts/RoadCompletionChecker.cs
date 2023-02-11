@@ -85,15 +85,13 @@ public class RoadCompletionChecker : MonoBehaviour
         RoadConnectionPoint rcp = _firstRcp;
         AddRoad(rcp);
 
+        yield return new WaitForFixedUpdate();
+        
         while (true)
         {
             Debug.Log("searching");
             rcp = rcp.GetPeerPoint();
-            if (rcp == null)
-            {
-                Debug.Log("null rcp");
-            }
-            Debug.Log(rcp.gameObject.name, rcp.gameObject);
+            
             if (rcp.GetConnectionPoint() != null)
             {
                 rcp = rcp.GetConnectionPoint();
@@ -124,41 +122,4 @@ public class RoadCompletionChecker : MonoBehaviour
             _sortedRoads.Add(rcp.GetRoad());
         }
     }
-
-    // IEnumerator AddConnectedRoads()
-    // {
-    //     while (true)
-    //     {
-    //         Debug.Log("searching");
-    //         List<RoadPiece> roads = _sortedRoads[^1].GetConnectedRoads();
-    //         for (var i = 0; i < roads.Count; i++)
-    //         {
-    //             var road = roads[i];
-    //             if (_sortedRoads.Contains(road) == false)
-    //             {
-    //                 _sortedRoads.Add(road);
-    //             }
-    //             else
-    //             {
-    //                 Debug.Log("else");
-    //                 if (i == roads.Count - 1)
-    //                 {
-    //                     Debug.Log("search complete & road not find");
-    //                     yield break;
-    //                 }
-    //             }
-    //
-    //             if (road.IsLastRoad())
-    //             {
-    //                 Debug.Log("road Complete");
-    //                 yield break;
-    //             }
-    //         }
-    //
-    //         yield return null;
-    //     }
-    //     // _sortedRoads.Add(_lastRoad);
-    // }
-    
-    
 }
