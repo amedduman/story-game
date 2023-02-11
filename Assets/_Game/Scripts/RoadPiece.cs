@@ -98,7 +98,10 @@ public class RoadPiece : MonoBehaviour
         List<RoadPiece> roads = new List<RoadPiece>();
         foreach (var rcp in _roadConnectionPoints)
         {
-            roads.Add(rcp.GetConnectionPoint().GetRoad());
+            var connectedRcp = rcp.GetConnectionPoint();
+            if(connectedRcp == null) continue;
+            var r = connectedRcp.GetRoad();
+            if (r!=null) roads.Add(r);
         }
 
         return roads;

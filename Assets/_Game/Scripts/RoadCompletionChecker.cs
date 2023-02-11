@@ -64,7 +64,7 @@ public class RoadCompletionChecker : MonoBehaviour
         }
         
         _sortedRoads.Add(_firstRoad);
-
+        Debug.Log("start checking");
         StartCoroutine(AddConnectedRoads());
 
         foreach (var sortedRoad in _sortedRoads)
@@ -77,6 +77,7 @@ public class RoadCompletionChecker : MonoBehaviour
     {
         while (true)
         {
+            Debug.Log("searching");
             List<RoadPiece> roads = _sortedRoads[^1].GetConnectedRoads();
             foreach (var road in roads)
             {
@@ -89,6 +90,7 @@ public class RoadCompletionChecker : MonoBehaviour
 
                     if (road.IsLastRoad())
                     {
+                        Debug.Log("road Complete");
                         yield break;
                     }
                 }

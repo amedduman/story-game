@@ -21,7 +21,6 @@ public class RoadConnectionPoint : MonoBehaviour
                     
                     if (rp.gameObject != gameObject)
                     {
-                         Debug.Log(rp.gameObject.name, rp.gameObject);
                          return rp;
                     }
                }
@@ -35,13 +34,6 @@ public class RoadConnectionPoint : MonoBehaviour
           return gameObject.GetComponentInParent<RoadPiece>();
      }
 
-     [ContextMenu("get connection")]
-     public void Debug_GetConnection()
-     {
-          GetConnectionPoint();
-     }
-     
-     [ContextMenu("IsSTartPoint")]
      public bool IsStartPoint()
      {
           var hitInfo = SphereCast();
@@ -52,12 +44,8 @@ public class RoadConnectionPoint : MonoBehaviour
                     Debug.Log("start point detected");
                     return true;
                }
-               else
-               {
-                    Debug.Log("start point is not detected");
-               }
           }
-
+          
           return false;
      }
 
@@ -81,8 +69,6 @@ public class RoadConnectionPoint : MonoBehaviour
                Physics.SphereCastAll(transform.position, _radius, transform.forward, Mathf.Infinity, _layerMask);
           return hitInfo;
      }
-     
-     
 
      RoadConnectionPoint GetPeerPoint()
      {
