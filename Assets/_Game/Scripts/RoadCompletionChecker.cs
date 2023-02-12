@@ -50,7 +50,7 @@ public class RoadCompletionChecker : MonoBehaviour
                         _firstRcp = rcp;
                     }
                 }
-                _sortedRoads.Add(road);
+                // _sortedRoads.Add(road);
                 _firstRoad = road;
                 break;
             }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Unity.VisualScripting;
@@ -10,8 +11,8 @@ public class RoadPiece : MonoBehaviour
     public List<Tile> Tiles {get; private set;} = new List<Tile>();
     
     [SerializeField] Transform _raycastPointsParent;
+    [SerializeField] Transform _waypointsParent;
     public RoadConnectionPoint[] _roadConnectionPoints;
-
     
     Draggable _draggable;
     Vector3 _startingPos;
@@ -105,5 +106,16 @@ public class RoadPiece : MonoBehaviour
         }
 
         return roads;
+    }
+
+    public List<Transform> GetWaypoints()
+    {
+        List<Transform> waypoints = new List<Transform>();
+        for (int i = 0; i < _waypointsParent.childCount; i++)
+        {
+            waypoints.Add(_waypointsParent.GetChild(i));
+        }
+
+        return waypoints;
     }
 }

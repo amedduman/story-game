@@ -5,32 +5,44 @@ using UnityEngine;
 
 public class Girl : MonoBehaviour
 {
+    [SerializeField] float _movementTimeToReachEachWaypoint = .3f;
+    RoadCompletionChecker _roadChecker;
+
+    void Awake()
+    {
+        _roadChecker = ServiceLocator.Get<RoadCompletionChecker>();
+    }
+
     void OnEnable()
     {
-        ServiceLocator.Get<RoadCompletionChecker>().OnRoadComplete += HandleRoadCompletion;
+        _roadChecker.OnRoadComplete += HandleRoadCompletion;
     }
 
     void OnDisable()
     {
-        ServiceLocator.Get<RoadCompletionChecker>().OnRoadComplete -= HandleRoadCompletion;
+        _roadChecker.OnRoadComplete -= HandleRoadCompletion;
     }
     void HandleRoadCompletion()
     {
-        var roads = ServiceLocator.Get<RoadCompletionChecker>().GetSortedRoads();
+        var roads = _roadChecker.GetSortedRoads();
+        Debug.Log(roads.Count);
+        foreach (var roadPiece in roads)
+        {
+            Debug.Log(roadPiece.gameObject.name, roadPiece.gameObject);
+        }
         StartCoroutine(Move());
         IEnumerator Move()
         {
             for (int i = 0; i < roads.Count; i++)
             {
-                var roadRnds = roads[i].GetComponentsInChildren<Renderer>();
-                foreach (var rnd in roadRnds)
+                var waypoints = roads[i].GetWaypoints();
+                foreach (var wp in waypoints)
                 {
-                    // transform.position = rnd.transform.position;
-                    transform.DOMove(rnd.transform.position, .1f);
-                    yield return new WaitForSecondsRealtime(.12f);
+                    transform.DOMove(wp.position, _movementTimeToReachEachWaypoint).SetEase(Ease.Linear);
+                    yield return new WaitForSecondsRealtime(_movementTimeToReachEachWaypoint + .1f);
                 }
             }
-            transform.DOMove(ServiceLocator.Get<RoadCompletionChecker>()._endTile.transform.position, .1f);
+            transform.DOMove(_roadChecker._endTile.transform.position, .1f).SetEase(Ease.Linear);
         }
     }
     
