@@ -13,15 +13,6 @@ public class Girl : MonoBehaviour
         _roadChecker = ServiceLocator.Get<RoadCompletionChecker>();
     }
 
-    // void OnEnable()
-    // {
-    //     _roadChecker.OnRoadComplete += HandleRoadCompletion;
-    // }
-    //
-    // void OnDisable()
-    // {
-    //     _roadChecker.OnRoadComplete -= HandleRoadCompletion;
-    // }
     public void HandleRoadCompletion()
     {
         var roads = _roadChecker.GetSortedRoads();
@@ -42,7 +33,8 @@ public class Girl : MonoBehaviour
                     yield return new WaitForSecondsRealtime(_movementTimeToReachEachWaypoint + .1f);
                 }
             }
-            transform.DOMove(_roadChecker._endTile.transform.position, .1f).SetEase(Ease.Linear);
+            transform.DOMove(_roadChecker._endTile.transform.position, .1f).SetEase(Ease.Linear).OnComplete(
+                () => ServiceLocator.Get<GameManager>().OnGirlReachedHome());
         }
     }
     

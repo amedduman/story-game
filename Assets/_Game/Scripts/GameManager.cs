@@ -9,7 +9,11 @@ public class GameManager : MonoBehaviour
 
     public void OnRoadComplete()
     {
-        ServiceLocator.Get<UIController>().HandleRoadComplete();
         ServiceLocator.Get<Girl>().HandleRoadCompletion();
+    }
+
+    public void OnGirlReachedHome()
+    {
+        ServiceLocator.Get<UIController>().HandleGirlReachedHome();
     }
 }

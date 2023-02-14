@@ -4,7 +4,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] GameObject _startCanvas;
     
-    public void HandleRoadComplete()
+    public void HandleGirlReachedHome()
     {
         _startCanvas.SetActive(true);        
     }
