@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RoadCompletionChecker : MonoBehaviour
 {
-    public event Action OnRoadComplete;
+    // public event Action OnRoadComplete;
     
     [SerializeField] Tile _startTile;
     public Tile _endTile;
@@ -16,12 +16,14 @@ public class RoadCompletionChecker : MonoBehaviour
     RoadPiece _firstRoad;
     RoadPiece _lastRoad;
     RoadConnectionPoint _firstRcp;
-    
+
+#if UNITY_EDITOR
     void Start()
     {
         _startTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.black;
         _endTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.black;
     }
+#endif
 
     public void AddRoad(RoadPiece rp)
     {
@@ -109,7 +111,8 @@ public class RoadCompletionChecker : MonoBehaviour
                 if (rcp.IsEndPoint())
                 {
                     Debug.Log("complete");
-                    OnRoadComplete?.Invoke();
+                    ServiceLocator.Get<GameManager>().OnRoadComplete();
+                    // OnRoadComplete?.Invoke();
                     yield break;
                 }
                 else

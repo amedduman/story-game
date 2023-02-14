@@ -13,16 +13,16 @@ public class Girl : MonoBehaviour
         _roadChecker = ServiceLocator.Get<RoadCompletionChecker>();
     }
 
-    void OnEnable()
-    {
-        _roadChecker.OnRoadComplete += HandleRoadCompletion;
-    }
-
-    void OnDisable()
-    {
-        _roadChecker.OnRoadComplete -= HandleRoadCompletion;
-    }
-    void HandleRoadCompletion()
+    // void OnEnable()
+    // {
+    //     _roadChecker.OnRoadComplete += HandleRoadCompletion;
+    // }
+    //
+    // void OnDisable()
+    // {
+    //     _roadChecker.OnRoadComplete -= HandleRoadCompletion;
+    // }
+    public void HandleRoadCompletion()
     {
         var roads = _roadChecker.GetSortedRoads();
         Debug.Log(roads.Count);

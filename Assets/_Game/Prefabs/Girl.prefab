@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5819777558375193587}
   - component: {fileID: 2127890589085478298}
   - component: {fileID: 5682306466535059213}
+  - component: {fileID: 8947983845902947658}
   m_Layer: 0
   m_Name: Girl
   m_TagString: Player
@@ -59,6 +60,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9083bd9377994f189b4dfbeb9960c7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _movementTimeToReachEachWaypoint: 0.3
+--- !u!114 &8947983845902947658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7208038564702262107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 872af7525b0804cd496a3f613d2f7be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isSingleton: 1
+  _cmp: {fileID: 5682306466535059213}
+  _id: 0
 --- !u!1 &7523959400780698129
 GameObject:
   m_ObjectHideFlags: 0
