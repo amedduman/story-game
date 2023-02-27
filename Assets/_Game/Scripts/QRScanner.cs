@@ -90,7 +90,10 @@ public class QRScanner : MonoBehaviour
             if (result != null)
             {
                 // _outputText.text = result.Text;
-                _playBtn.gameObject.SetActive(true);
+                if (result.Text == "redHood_1")
+                {
+                    _playBtn.gameObject.SetActive(true);
+                }
             }
             else
             {

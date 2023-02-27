@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_Game/Scenes/StartScene.unity
+    guid: ceedff19d83f74c9982f021040aaa297
+  - enabled: 1
     path: Assets/_Game/Scenes/QrScannerScene.unity
     guid: ec297b6343d8043a1a62bb80fff7c731
   - enabled: 1
