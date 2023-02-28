@@ -20,8 +20,8 @@ public class RoadCompletionChecker : MonoBehaviour
 #if UNITY_EDITOR
     void Start()
     {
-        _startTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.black;
-        _endTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.black;
+        // _startTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.black;
+        // _endTile.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.black;
     }
 #endif
 

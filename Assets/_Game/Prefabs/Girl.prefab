@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementTimeToReachEachWaypoint: 0.3
+  _animator: {fileID: 2664404840755018034}
 --- !u!114 &8947983845902947658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4076652838953156189}
   - component: {fileID: 5294996134551025610}
+  - component: {fileID: 2664404840755018034}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -160,3 +162,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2664404840755018034
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523959400780698129}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a9c7582bceb3e44a9b03accd73d52740, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

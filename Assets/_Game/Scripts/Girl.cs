@@ -6,6 +6,9 @@ using UnityEngine;
 public class Girl : MonoBehaviour
 {
     [SerializeField] float _movementTimeToReachEachWaypoint = .3f;
+    [SerializeField] Animator _animator;
+
+    
     RoadCompletionChecker _roadChecker;
 
     void Awake()
@@ -24,6 +27,7 @@ public class Girl : MonoBehaviour
         StartCoroutine(Move());
         IEnumerator Move()
         {
+            _animator.SetBool("isMoving", true);
             for (int i = 0; i < roads.Count; i++)
             {
                 var waypoints = roads[i].GetWaypoints();
@@ -34,7 +38,11 @@ public class Girl : MonoBehaviour
                 }
             }
             transform.DOMove(_roadChecker._endTile.transform.position, .1f).SetEase(Ease.Linear).OnComplete(
-                () => ServiceLocator.Get<GameManager>().OnGirlReachedHome());
+                () =>
+                {
+                    ServiceLocator.Get<GameManager>().OnGirlReachedHome();
+                    _animator.SetBool("isMoving", false);
+                });
         }
     }
     
